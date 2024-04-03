@@ -2,9 +2,9 @@ import mysql.connector
 from datetime import datetime
 
 
-def create_database_and_table():
+def create_database_and_table(username, password):
     try:
-        conn = mysql.connector.connect(host="localhost", user="root", password="toor")
+        conn = mysql.connector.connect(host="localhost", user=username, password=password)
         cursor = conn.cursor()
 
         # Create the database if it doesn't exist
@@ -30,12 +30,12 @@ def create_database_and_table():
         conn.close()
 
 
-def add_expense():
+def add_expense(username, password):
     try:
         conn = mysql.connector.connect(
             host="localhost",
-            user="root",
-            password="toor",
+            user=username,
+            password=password,
             database="expense_tracker"
         )
         cursor = conn.cursor()
@@ -89,12 +89,12 @@ def add_expense():
         conn.close()
 
 
-def categorize_expenses():
+def categorize_expenses(username, password):
     try:
         conn = mysql.connector.connect(
             host="localhost",
-            user="root",
-            password="toor",
+            user=username,
+            password=password,
             database="expense_tracker"
         )
         cursor = conn.cursor()
@@ -117,12 +117,12 @@ def categorize_expenses():
         conn.close()
 
 
-def view_spending_patterns():
+def view_spending_patterns(username, password):
     try:
         conn = mysql.connector.connect(
             host="localhost",
-            user="root",
-            password="toor",
+            user=username,
+            password=password,
             database="expense_tracker"
         )
         cursor = conn.cursor()
@@ -146,7 +146,16 @@ def view_spending_patterns():
 
 
 def main():
-    create_database_and_table()
+    while True:
+        username = input("Enter database username: ")
+        password = input("Enter database password: ")
+
+        try:
+            create_database_and_table(username, password)
+            break  # If successful, break out of the loop
+        except mysql.connector.Error as e:
+            print(f"Error: {e}")
+            print("Please check your username and password and try again.")
 
     while True:
         print("\n1. Add expense")
@@ -157,11 +166,11 @@ def main():
         print("")
 
         if choice == '1':
-            add_expense()
+            add_expense(username, password)
         elif choice == '2':
-            categorize_expenses()
+            categorize_expenses(username, password)
         elif choice == '3':
-            view_spending_patterns()
+            view_spending_patterns(username, password)
         elif choice == '4':
             print("\nExiting...")
             break
