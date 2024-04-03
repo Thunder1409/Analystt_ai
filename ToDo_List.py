@@ -1,3 +1,33 @@
+class TodoList:
+    def __init__(self):
+        self.tasks = []
+
+    def add_task(self, task):
+        self.tasks.append(task.lower())
+        print(f"Task '{task}' added.")
+
+    def delete_task(self, task):
+        if task in self.tasks:
+            self.tasks.remove(task.lower())
+            print(f"Task '{task}' deleted.")
+        else:
+            print(f"Task '{task}' not found.")
+
+    def see_tasks(self):
+        if self.tasks:
+            print("\nTasks:")
+            for index, task in enumerate(self.tasks, start=1):
+                print(f"{index}. {task}")
+        else:
+            print("\nNo tasks.")
+
+    def mark_complete(self, task):
+        if task in self.tasks:
+            print(f"Task '{task}' marked as complete.")
+            self.delete_task(task.lower())
+        else:
+            print(f"Task '{task}' not found.")
+
 def main():
     while True:
         username = input("Enter database username: ")
